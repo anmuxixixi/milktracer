@@ -1,0 +1,112 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.cow.com:
+  peer0.org1.cow.com:
+  peer1.org1.cow.com:
+  peer0.org2.cow.com:
+  peer1.org2.cow.com:
+  peer0.org3.cow.com:
+  peer1.org3.cow.com:
+
+networks:
+  milk:
+
+services:
+
+  orderer.cow.com:
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: orderer.cow.com
+    container_name: orderer.cow.com
+    networks:
+      - milk
+
+  peer0.org1.cow.com:
+    container_name: peer0.org1.cow.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.org1.cow.com
+    networks:
+      - milk
+
+  peer1.org1.cow.com:
+    container_name: peer1.org1.cow.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.org1.cow.com
+    networks:
+      - milk
+
+  peer0.org2.cow.com:
+    container_name: peer0.org2.cow.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.org2.cow.com
+    networks:
+      - milk
+
+  peer1.org2.cow.com:
+    container_name: peer1.org2.cow.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.org2.cow.com
+    networks:
+      - milk
+
+  peer0.org3.cow.com:
+    container_name: peer0.org3.cow.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.org3.cow.com
+    networks:
+      - milk
+
+  peer1.org3.cow.com:
+    container_name: peer1.org3.cow.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.org3.cow.com
+    networks:
+      - milk
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.org1.cow.com:7051
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.cow.com/peers/peer0.org1.cow.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.cow.com/peers/peer0.org1.cow.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.cow.com/peers/peer0.org1.cow.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.cow.com/users/Admin@org1.cow.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.cow.com
+      - peer0.org1.cow.com
+      - peer1.org1.cow.com
+      - peer0.org2.cow.com
+      - peer1.org2.cow.com
+      - peer0.org3.cow.com
+      - peer1.org3.cow.com
+    networks:
+      - milk
