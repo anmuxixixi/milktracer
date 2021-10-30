@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.amx.milk.dao.UserDao">
+    <select id="getUserByMessage" resultType="userInfo">
+        select * from user where username=#{username} and password=#{password}
+    </select>
+
+    <select id="getUserList" resultType="userInfo">
+        select * from user
+    </select>
+
+    <insert id="addUser">
+        insert into user(username,password,role,avatar,introduction) value (#{userName},#{passWord},#{role},#{avatar},#{introduction})
+    </insert>
+
+    <update id="updateUser">
+        update user set username=#{userName},password=#{passWord},role =#{role},avatar=#{avatar},introduction=#{introduction} where id=#{id}
+    </update>
+
+    <delete id="deleteUser">
+        delete from user where id=#{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    # MySQL配置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/milk?useSSL=true&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 1996
+
+# Mybatis配置
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.amx.milk.entity  # 可以不用写全路径，用类名即可
+
+server:
+  port: 8080

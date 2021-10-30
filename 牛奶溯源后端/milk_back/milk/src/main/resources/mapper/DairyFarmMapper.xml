@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.amx.milk.dao.DairyFarmInfoDao">
+    <select id="getAllDairyInfo" resultType="dairyFarmInfo">
+        select * from dairyfarm
+    </select>
+
+    <insert id="createDairyFarm" >
+        insert into dairyfarm(id,name,create_time,max_Cow_No,max_Bucket_No) value (#{id},#{name},#{create_time},#{max_Cow_No},#{max_Bucket_No})
+    </insert>
+
+    <select id="getAllCowOperation" resultType="cowOperation">
+        select * from cowoperation
+    </select>
+
+
+    <select id="getCowOperation" resultType="cowOperation">
+        select * from cowoperation where cowId=#{cowId}
+    </select>
+
+    <select id="getAllBucket" resultType="bucket">
+        select * from bucket
+    </select>
+
+    <select id="queryCowExist" resultType="cow">
+        select * from cow where id=#{cowId}
+    </select>
+
+    <insert id="addCowOperation">
+        insert into cowoperation(cowId,operateTime,operation,consumptionOrOutput) value (#{cowId},#{operateTime},#{operation},#{consumptionOrOutput})
+    </insert>
+
+    <select id="getDairyFarmById" resultType="dairyFarmInfo">
+        select * from dairyfarm where id=#{farmId}
+    </select>
+
+    <insert id="addBucket">
+        insert into bucket(id,machiningId,time,status) values (#{id},#{machiningId},#{time},#{status})
+    </insert>
+
+    <update id="updateDairyFarm">
+        update dairyfarm set id=#{id},create_time=#{create_time},max_Cow_No=#{max_Cow_No},max_Bucket_No=#{max_Bucket_No},name=#{name} where id=#{id}
+    </update>
+
+</mapper>
