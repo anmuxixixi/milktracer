@@ -1,0 +1,34 @@
+OrdererOrgs:           ##定义Orderer组织的结构
+
+  - Name: Orderer     ##组织名称
+    Domain: cow.com     ##组织命名域
+    EnableNodeOUs: true
+
+    Specs:
+      - Hostname: orderer
+
+PeerOrgs:       ##管理Peer节点的组织的定义
+
+  - Name: Org1    ##组织名称
+    Domain: org1.cow.com     ##组织域
+    EnableNodeOUs: true
+    Template:   ##  允许定义从模板顺序创建的1个或多个主机
+      Count: 2  ##  表示生成几个Peer
+    Users:
+      Count: 4      #除Admin之外的用户帐户数量
+
+  - Name: Org2
+    Domain: org2.cow.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 4
+
+  - Name: Org3
+    Domain: org3.cow.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 4
