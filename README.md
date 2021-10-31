@@ -19,3 +19,6 @@
 - SpringBoot 2.5.5
 - Mysql   8.0.25
 - Vue-Element-Admin  4.4.0
+
+
+全部的开发文档放在了`牛奶溯源.pdf`文件中，有需要的自己下载哈❀
